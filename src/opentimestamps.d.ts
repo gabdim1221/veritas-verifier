@@ -43,12 +43,17 @@ declare module "opentimestamps" {
 
   export function upgrade(detached: DetachedTimestampFile): Promise<boolean>;
 
+  /** Submit the detached file's hash to OpenTimestamps calendar servers and
+   *  populate it with a pending proof. Mutates `detached` in place. */
+  export function stamp(detached: DetachedTimestampFile): Promise<void>;
+
   const _default: {
     DetachedTimestampFile: typeof DetachedTimestampFile;
     Ops: typeof Ops;
     Context: typeof Context;
     verify: typeof verify;
     upgrade: typeof upgrade;
+    stamp: typeof stamp;
   };
   export default _default;
 }

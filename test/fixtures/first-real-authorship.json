@@ -1,0 +1,44 @@
+{
+  "version": "tessera/v0.1",
+  "type": "authorship",
+  "tessera_id": "76d35dc4-6fc6-4012-bfbe-1769da307bbb",
+  "issuer": {
+    "user_handle": "gabe",
+    "user_master_pubkey": "25awEEHkW7LVJrmpT5GUEcKRAXKdEqnnjGLgvl2Dc58",
+    "device_pubkey": "NFBnDC_aYFcdKXfyETbQY8hHBwb-OMEQMm5U0zmXOfY",
+    "device_delegation_hash": "c896553f6d3aba5dccdca0d13c6604a6c91e7cc6b6e18b18687d49fb912300ca"
+  },
+  "claim": {
+    "loa": 0,
+    "issued_at": "2026-05-08T20:22:20.607Z"
+  },
+  "type_payload": {
+    "subject": {
+      "content_hash": "fe3afe5e411a4f1f990de897edab8c09301a500e0cef070b722e25c78f8f574b",
+      "content_size_bytes": 16805,
+      "content_mime": "application/octet-stream",
+      "content_filename": "TESSERA_V0.1_SPEC.md"
+    },
+    "session": {
+      "started_at": "2026-05-08T20:22:20.607Z",
+      "ended_at": "2026-05-08T20:22:20.607Z",
+      "duration_ms": 0,
+      "tools_used": [
+        "veritas-cli@0.1"
+      ]
+    },
+    "behavioral_fingerprint": "_cihRbwSffAMj9MRK1O2mkZSOseANirRWNakGoR6b54",
+    "ai_assistance_disclosure": "none"
+  },
+  "biometric_attestation": {
+    "method": "none"
+  },
+  "anchor": {
+    "service": "opentimestamps",
+    "ots_proof": "AE9wZW5UaW1lc3RhbXBzAABQcm9vZgC/ieLohOiSlAEIoWrk4SfGQ8fI7VmIm53/7LaR49rVu+ywqlxyMdNCDzLwEFHVLxIrP9MCnUzJl8E6LJoI//AIxod5Y1WEc+oI8BBO/3c+eWp8tYF8gH3XLw0QCPEgav1SKMOWqLGyX6f0ohswolgScZG5xWqG6bfM/bZ25KUI8QRp/kX98AgNOniuer/vlQCD3+MNLvkMji4taHR0cHM6Ly9hbGljZS5idGMuY2FsZW5kYXIub3BlbnRpbWVzdGFtcHMub3Jn//AIs1IXHZ3g9QUI8BBZGb5C6bHqkm9YLwF5eN5FCPAguqXkmQVEa+GzZUVu/J517mPozrU8eepEc2eJaqHEsXgI8CC3LKx2VTXp7q86ps8fcQwGTksWfLzbVNtWQCknB/xdeAjxBGn+Rf3wCFW2EpZrH56qAIPf4w0u+QyOLCtodHRwczovL2JvYi5idGMuY2FsZW5kYXIub3BlbnRpbWVzdGFtcHMub3Jn//AQaPQoE9oVxhvHl0f+RBGXyQjwIE+N4aZLEo2DL5vzJUAUg/SXJvGmMOgymXKGeeEU/Gh3CPEgsDPi7rHAwYo9+Ai2UfPgpp1g1GyFelvkZ39Qrti3Pf4I8QRp/kX98AjQaRD7/DZhjQCD3+MNLvkMjikoaHR0cHM6Ly9maW5uZXkuY2FsZW5kYXIuZXRlcm5pdHl3YWxsLmNvbfAQ41oD2ProFGgXnY8nqXc7RAjxBGn+Rf3wCO6QaJJxLsdfAIPf4w0u+QyOIyJodHRwczovL2J0Yy5jYWxlbmRhci5jYXRhbGxheHkuY29t"
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "value": "0rqAidD0RVryBjLDS4HBf7Hs5pUDuNdCg6w3JKrPaA1F-G8W0XUDJ_EbDZdfS-AtxqdP_UJqvF_TG7r8A7sMCA"
+  }
+}
