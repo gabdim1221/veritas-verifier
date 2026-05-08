@@ -14,5 +14,8 @@ export {
   base64urlEncode,
   base64urlDecode,
 } from "./ed25519.js";
-export { verifyOtsProof, upgradeOtsProof, type OTSResult } from "./ots.js";
+// OTS functions live at "@veritas/verifier/ots-node" so the main entry stays
+// browser-friendly (no Node-only `opentimestamps` dep in the bundle). Only
+// the result TYPE is re-exported here.
+export type { OTSResult } from "./ots.js";
 export { verifyDelegation, type DelegationCheckResult } from "./delegation.js";

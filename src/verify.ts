@@ -17,7 +17,9 @@ import type {
 import { VerificationErrorCode } from "./errors.js";
 import { canonicalizeForSigning, tesseraHash, hex } from "./canonicalize.js";
 import { verifySignature } from "./ed25519.js";
-import { verifyOtsProof, type OTSResult } from "./ots.js";
+// Type-only import: keeps src/ots.js (and its `opentimestamps` dep) out of
+// the browser bundle. Callers supply a concrete verifyAnchor implementation.
+import type { OTSResult } from "./ots.js";
 import { verifyDelegation } from "./delegation.js";
 import { sha256 } from "@noble/hashes/sha2.js";
 
@@ -38,9 +40,10 @@ export interface VerifyOptions {
   /** If true, a pending OTS proof yields ANCHOR_PENDING failure rather
    *  than a successful result with anchorStatus="pending". Default false. */
   requireConfirmedAnchor?: boolean;
-  /** Override for OTS verification. Defaults to {@link verifyOtsProof}.
-   *  Tests inject deterministic anchor results via this hook; future
-   *  alternative anchor services (rfc3161, custom) plug in here too. */
+  /** Anchor verifier. Required. Node consumers typically pass
+   *  `verifyOtsProof` from `@veritas/verifier/ots-node`; browsers can pass
+   *  a stub (e.g. one that always returns `{ status: "pending" }`) until
+   *  in-browser OTS is wired. */
   verifyAnchor?: (proofB64: string, expectedHash: Uint8Array) => Promise<OTSResult>;
 }
 
@@ -124,7 +127,12 @@ export async function verify(
 ): Promise<VerificationResult> {
   const maxSkewSec = options.maxClockSkewSec ?? 86400;
   const requiredLoa = options.requiredLoa ?? 0;
-  const verifyAnchor = options.verifyAnchor ?? verifyOtsProof;
+  const verifyAnchor = options.verifyAnchor;
+  if (!verifyAnchor) {
+    throw new Error(
+      "verify(): options.verifyAnchor is required. Node: import { verifyOtsProof } from '@veritas/verifier/ots-node'. Browser: pass a stub.",
+    );
+  }
 
   // 1. Schema validation
   const schemaErr = validateSchema(tessera);

@@ -9,8 +9,15 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./ots-node": {
+      "types": "./dist/ots.d.ts",
+      "import": "./dist/ots.js"
     }
   },
+  "sideEffects": [
+    "./dist/ed25519.js"
+  ],
   "files": [
     "dist",
     "README.md",

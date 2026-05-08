@@ -34,7 +34,7 @@ import {
   type AuthorshipPayload,
   type DelegationPayload,
 } from "../src/index.js";
-import { upgradeOtsProof } from "../src/ots.js";
+import { verifyOtsProof, upgradeOtsProof } from "../src/ots.js";
 import {
   ROOT,
   ensureKeystore,
@@ -465,6 +465,7 @@ async function verifyCommand(bundlePath: string, opts: VerifyOpts): Promise<void
   const result = await verify(t, {
     fetchDelegation: async () => delegation,
     content: contentBytes,
+    verifyAnchor: verifyOtsProof,
   });
 
   if (result.valid) {
