@@ -1,0 +1,31 @@
+{
+  "version": "tessera/v0.1",
+  "type": "revocation",
+  "tessera_id": "bbbb1111-1111-4111-8111-bbbbbbbbbbbb",
+  "issuer": {
+    "user_handle": "alice",
+    "user_master_pubkey": "Yr_XKftXFcBEH1LtlxKubWWMh25AMCgC8M20ikpA-wc",
+    "device_pubkey": "lXC7FDh-dcPy0HUD_qsVriePjhvjndUvGTmezpnskAM",
+    "device_delegation_hash": "770e174da20c6c3e5756192582f8005b3722d27b1f249599be24c7282e852fb6"
+  },
+  "claim": {
+    "loa": 0,
+    "issued_at": "2026-05-08T18:00:00.000Z"
+  },
+  "type_payload": {
+    "revoked_tessera_hash": "5ff312d0cc0331b42bf9c482b6ed339793d7aaf38e527659a2b337a633ab5a57",
+    "reason": "retracted",
+    "reason_text": "test vector — not a real revocation"
+  },
+  "biometric_attestation": {
+    "method": "none"
+  },
+  "anchor": {
+    "service": "opentimestamps",
+    "ots_proof": "q6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urqw"
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "value": "L0z4fgTdoqfQvSRlMyjNaE3LbRsvBdbz_TIup5i0LcO-IwU7cnly_MOwRAUiUEyN-0xLy_jtWyKwrBfsdUR8Ag"
+  }
+}

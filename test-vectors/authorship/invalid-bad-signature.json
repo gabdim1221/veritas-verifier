@@ -1,0 +1,85 @@
+{
+  "tessera": {
+    "version": "tessera/v0.1",
+    "type": "authorship",
+    "tessera_id": "aaaa1111-1111-4111-8111-aaaaaaaaaaaa",
+    "issuer": {
+      "user_handle": "alice",
+      "user_master_pubkey": "Yr_XKftXFcBEH1LtlxKubWWMh25AMCgC8M20ikpA-wc",
+      "device_pubkey": "lXC7FDh-dcPy0HUD_qsVriePjhvjndUvGTmezpnskAM",
+      "device_delegation_hash": "770e174da20c6c3e5756192582f8005b3722d27b1f249599be24c7282e852fb6"
+    },
+    "claim": {
+      "loa": 2,
+      "issued_at": "2026-05-08T18:00:00.000Z"
+    },
+    "type_payload": {
+      "subject": {
+        "content_hash": "3a96dc955bbb9a886121fa90729e1ce6f6e18f3671d1f988a4b5ac57bba8c8ca",
+        "content_size_bytes": 56,
+        "content_mime": "text/plain",
+        "content_filename": "conformance.txt"
+      },
+      "session": {
+        "started_at": "2026-05-08T18:00:00.000Z",
+        "ended_at": "2026-05-08T18:00:00.000Z",
+        "duration_ms": 0,
+        "tools_used": [
+          "veritas-conformance@v0.1"
+        ]
+      },
+      "behavioral_fingerprint": "OpbclVu7mohhIfqQcp4c5vbhjzZx0fmIpLWsV7uoyMo",
+      "ai_assistance_disclosure": "none"
+    },
+    "biometric_attestation": {
+      "method": "webauthn",
+      "authenticator_data": "zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMw",
+      "client_data_json": "3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3Q"
+    },
+    "anchor": {
+      "service": "opentimestamps",
+      "ots_proof": "q6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urqw"
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "value": "ARHxkuZzpwGdCkZd82fjlCI4bVeGAsUl-ht2ZyfhIhx7_5ukG7s1KIMWgrHqLI0JEn1vKB9C0Lf4btZfdDZmBg"
+    }
+  },
+  "delegation": {
+    "version": "tessera/v0.1",
+    "type": "delegation",
+    "tessera_id": "11111111-1111-4111-8111-111111111111",
+    "issuer": {
+      "user_handle": "alice",
+      "user_master_pubkey": "Yr_XKftXFcBEH1LtlxKubWWMh25AMCgC8M20ikpA-wc",
+      "device_pubkey": "Yr_XKftXFcBEH1LtlxKubWWMh25AMCgC8M20ikpA-wc",
+      "device_delegation_hash": ""
+    },
+    "claim": {
+      "loa": 0,
+      "issued_at": "2026-05-08T17:00:00.000Z"
+    },
+    "type_payload": {
+      "delegated_pubkey": "lXC7FDh-dcPy0HUD_qsVriePjhvjndUvGTmezpnskAM",
+      "device_name": "alice-test-device",
+      "device_platform": "test",
+      "scope": [
+        "sign:authorship",
+        "sign:revocation"
+      ],
+      "valid_from": "2026-05-08T17:00:00.000Z",
+      "valid_until": "2099-01-01T00:00:00.000Z"
+    },
+    "biometric_attestation": {
+      "method": "none"
+    },
+    "anchor": {
+      "service": "opentimestamps",
+      "ots_proof": "q6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urqw"
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "value": "i0uOkdHBtZNilmwxJecxHy_vd6Tgi-Mlsx_qqPqm5fKIHbYvziphxH7E7Jgae2z7YVamC4uSUCrRWsDcOI2QCA"
+    }
+  }
+}
