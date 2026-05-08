@@ -1,0 +1,58 @@
+{
+  "name": "@veritas/verifier",
+  "version": "0.1.0",
+  "description": "Standalone verifier for Tessera v0.1 certificates — works in Node, browsers, and edge runtimes.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit",
+    "issue": "tsx cli/issue.ts",
+    "prepublishOnly": "npm run build && npm run test"
+  },
+  "keywords": [
+    "tessera",
+    "veritas",
+    "authorship",
+    "cryptography",
+    "ed25519",
+    "opentimestamps",
+    "verification"
+  ],
+  "author": "FRGE Nexus LLC <fdimauro@frgenexus.com>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gabdim1221/veritas-verifier"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@noble/ed25519": "^3.1.0",
+    "@noble/hashes": "^2.2.0",
+    "canonicalize": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "@vitest/coverage-v8": "^4.1.5",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  }
+}

@@ -1,0 +1,26 @@
+export enum VerificationErrorCode {
+  INVALID_SCHEMA = "INVALID_SCHEMA",
+  INVALID_SIGNATURE = "INVALID_SIGNATURE",
+  DELEGATION_NOT_FOUND = "DELEGATION_NOT_FOUND",
+  INVALID_DELEGATION_SIGNATURE = "INVALID_DELEGATION_SIGNATURE",
+  DELEGATION_KEY_MISMATCH = "DELEGATION_KEY_MISMATCH",
+  DELEGATION_EXPIRED = "DELEGATION_EXPIRED",
+  DELEGATION_REVOKED = "DELEGATION_REVOKED",
+  INVALID_ANCHOR = "INVALID_ANCHOR",
+  ANCHOR_TIME_MISMATCH = "ANCHOR_TIME_MISMATCH",
+  ANCHOR_PENDING = "ANCHOR_PENDING",
+  REVOKED = "REVOKED",
+  CONTENT_MISMATCH = "CONTENT_MISMATCH",
+  LOA_INSUFFICIENT = "LOA_INSUFFICIENT",
+}
+
+export class VerificationError extends Error {
+  constructor(
+    public code: VerificationErrorCode,
+    message: string,
+    public details?: unknown,
+  ) {
+    super(message);
+    this.name = "VerificationError";
+  }
+}
