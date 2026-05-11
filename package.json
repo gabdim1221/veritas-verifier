@@ -1,5 +1,5 @@
 {
-  "name": "@veritas/verifier",
+  "name": "@confirmata/verifier",
   "version": "0.1.0",
   "description": "Standalone verifier for Tessera v0.1 certificates — works in Node, browsers, and edge runtimes.",
   "type": "module",
@@ -34,7 +34,7 @@
   },
   "keywords": [
     "tessera",
-    "veritas",
+    "confirmata",
     "authorship",
     "cryptography",
     "ed25519",
@@ -45,7 +45,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gabdim1221/veritas-verifier"
+    "url": "https://github.com/gabdim1221/confirmata-verifier"
   },
   "engines": {
     "node": ">=20"

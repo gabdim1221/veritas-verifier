@@ -41,8 +41,8 @@ const ROOT = path.resolve(__dirname, "..", "test-vectors");
  *  identically across runs. NOT a cryptographic KDF — for reproducibility
  *  of test fixtures only. */
 function deterministicKey(label: string): Uint8Array {
-  // h = sha256("veritas/v0.1/test-vectors/" + label) — bound to this purpose
-  return sha256(new TextEncoder().encode(`veritas/v0.1/test-vectors/${label}`));
+  // h = sha256("confirmata/v0.1/test-vectors/" + label) — bound to this purpose
+  return sha256(new TextEncoder().encode(`confirmata/v0.1/test-vectors/${label}`));
 }
 
 function detKeypair(label: string): { privateKey: Uint8Array; publicKey: Uint8Array } {
@@ -149,7 +149,7 @@ function buildAuthorship(o: AuthorshipOpts): Tessera {
         started_at: ISSUED_AT,
         ended_at: ISSUED_AT,
         duration_ms: 0,
-        tools_used: ["veritas-conformance@v0.1"],
+        tools_used: ["confirmata-conformance@v0.1"],
       },
       behavioral_fingerprint: base64urlEncode(sha256(o.contentBytes)),
       ai_assistance_disclosure: "none",

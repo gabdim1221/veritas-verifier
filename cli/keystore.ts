@@ -1,8 +1,8 @@
 /**
- * Filesystem keystore for the veritas CLI.
+ * Filesystem keystore for the confirmata CLI.
  *
  * Layout:
- *   ~/.veritas/                                   (mode 0700)
+ *   ~/.confirmata/                                   (mode 0700)
  *   ├── master.json                               (mode 0600)
  *   └── devices/                                  (mode 0700)
  *       └── <deviceId>.json                       (mode 0600)
@@ -36,7 +36,7 @@ export interface DeviceRecord {
   revokedAt?: string | null;
 }
 
-export const ROOT = path.join(os.homedir(), ".veritas");
+export const ROOT = path.join(os.homedir(), ".confirmata");
 const MASTER = path.join(ROOT, "master.json");
 const DEVICES_DIR = path.join(ROOT, "devices");
 

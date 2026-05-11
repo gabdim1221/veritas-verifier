@@ -1,10 +1,10 @@
 /**
- * OpenTimestamps issuance helper for the veritas CLI.
+ * OpenTimestamps issuance helper for the confirmata CLI.
  *
  * Submits a SHA-256 hash to OTS calendar servers and returns the resulting
  * pending proof base64. On network failure, returns null and the caller
  * decides whether to proceed with an unanchored Tessera (and run
- * `veritas upgrade` later) or to abort.
+ * `confirmata upgrade` later) or to abort.
  */
 
 import ots from "opentimestamps";

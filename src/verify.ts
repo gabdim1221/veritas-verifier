@@ -41,7 +41,7 @@ export interface VerifyOptions {
    *  than a successful result with anchorStatus="pending". Default false. */
   requireConfirmedAnchor?: boolean;
   /** Anchor verifier. Required. Node consumers typically pass
-   *  `verifyOtsProof` from `@veritas/verifier/ots-node`; browsers can pass
+   *  `verifyOtsProof` from `@confirmata/verifier/ots-node`; browsers can pass
    *  a stub (e.g. one that always returns `{ status: "pending" }`) until
    *  in-browser OTS is wired. */
   verifyAnchor?: (proofB64: string, expectedHash: Uint8Array) => Promise<OTSResult>;
@@ -130,7 +130,7 @@ export async function verify(
   const verifyAnchor = options.verifyAnchor;
   if (!verifyAnchor) {
     throw new Error(
-      "verify(): options.verifyAnchor is required. Node: import { verifyOtsProof } from '@veritas/verifier/ots-node'. Browser: pass a stub.",
+      "verify(): options.verifyAnchor is required. Node: import { verifyOtsProof } from '@confirmata/verifier/ots-node'. Browser: pass a stub.",
     );
   }
 

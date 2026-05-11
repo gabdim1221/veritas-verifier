@@ -1,7 +1,7 @@
 /**
  * TypeScript types for Tessera v0.1.
  *
- * Source of truth: github.com/gabdim1221/veritas-protocol/blob/main/spec/v0.1/tessera.md
+ * Source of truth: github.com/gabdim1221/confirmata-protocol/blob/main/spec/v0.1/tessera.md
  * If a field appears here that is not in the spec, that is a bug in this file.
  */
 

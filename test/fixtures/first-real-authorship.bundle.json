@@ -25,7 +25,7 @@
         "ended_at": "2026-05-08T20:22:20.607Z",
         "duration_ms": 0,
         "tools_used": [
-          "veritas-cli@0.1"
+          "confirmata-cli@0.1"
         ]
       },
       "behavioral_fingerprint": "_cihRbwSffAMj9MRK1O2mkZSOseANirRWNakGoR6b54",

@@ -45,7 +45,7 @@ interface Pair {
 
 function buildAuthorshipPair(opts: PairOpts = {}): Pair {
   const {
-    contentText = "hello veritas",
+    contentText = "hello confirmata",
     loa = 2 as LOA,
     delegationValidFrom = "2026-05-08T11:00:00Z",
     delegationValidUntil = null,
@@ -117,7 +117,7 @@ function buildAuthorshipPair(opts: PairOpts = {}): Pair {
         started_at: "2026-05-08T11:30:00Z",
         ended_at: contentIssuedAt,
         duration_ms: 30 * 60 * 1000,
-        tools_used: ["veritas-cli@0.1"],
+        tools_used: ["confirmata-cli@0.1"],
       },
       behavioral_fingerprint: base64urlEncode(sha256(contentBytes)),
       ai_assistance_disclosure: "none",

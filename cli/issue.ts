@@ -1,6 +1,6 @@
 #!/usr/bin/env -S npx tsx
 /**
- * veritas — issuer CLI for Tessera v0.1.
+ * confirmata — issuer CLI for Tessera v0.1.
  *
  * Subcommands:
  *   init [--handle <handle>]       Generate master + first device
@@ -110,7 +110,7 @@ interface InitOpts {
 async function initCommand(opts: InitOpts): Promise<void> {
   if (await masterExists()) {
     console.error(`error: keystore already initialized at ${ROOT}`);
-    console.error("  delete it first if you really mean to start over: rm -rf ~/.veritas");
+    console.error("  delete it first if you really mean to start over: rm -rf ~/.confirmata");
     process.exitCode = 1;
     return;
   }
@@ -140,7 +140,7 @@ async function initCommand(opts: InitOpts): Promise<void> {
   console.log(`  master pubkey:  ${masterRecord.publicKey.slice(0, 32)}…`);
   console.log(`  handle:         ${handle}`);
   console.log("");
-  console.log("⚠  BACK UP ~/.veritas/master.json — losing it means losing your identity.");
+  console.log("⚠  BACK UP ~/.confirmata/master.json — losing it means losing your identity.");
 }
 
 // --------------------------------------------------------------------------
@@ -150,7 +150,7 @@ async function initCommand(opts: InitOpts): Promise<void> {
 async function deviceAddCommand(name: string): Promise<void> {
   const master = await loadMaster();
   if (!master) {
-    console.error("error: no master key — run `veritas init` first");
+    console.error("error: no master key — run `confirmata init` first");
     process.exitCode = 1;
     return;
   }
@@ -251,13 +251,13 @@ interface IssueOpts {
 async function issueCommand(filePath: string, opts: IssueOpts): Promise<void> {
   const master = await loadMaster();
   if (!master) {
-    console.error("error: no master key — run `veritas init` first");
+    console.error("error: no master key — run `confirmata init` first");
     process.exitCode = 1;
     return;
   }
   const device = await activeDevice();
   if (!device) {
-    console.error("error: no active device — run `veritas device add <name>`");
+    console.error("error: no active device — run `confirmata device add <name>`");
     process.exitCode = 1;
     return;
   }
@@ -311,7 +311,7 @@ async function issueCommand(filePath: string, opts: IssueOpts): Promise<void> {
         started_at: issuedAt,
         ended_at: issuedAt,
         duration_ms: 0,
-        tools_used: ["veritas-cli@0.1"],
+        tools_used: ["confirmata-cli@0.1"],
       },
       behavioral_fingerprint: stubBehavioralFingerprint(bytes, issuedAt, devicePubB64u),
       ai_assistance_disclosure: "none",
@@ -408,7 +408,7 @@ async function upgradeCommand(tesseraPath: string): Promise<void> {
 async function infoCommand(): Promise<void> {
   const master = await loadMaster();
   if (!master) {
-    console.log("(no master key — run `veritas init`)");
+    console.log("(no master key — run `confirmata init`)");
     return;
   }
   const devices = await loadDevices();
@@ -490,7 +490,7 @@ async function verifyCommand(bundlePath: string, opts: VerifyOpts): Promise<void
 // CLI wiring
 // --------------------------------------------------------------------------
 
-const cli = cac("veritas");
+const cli = cac("confirmata");
 
 cli.command("init", "Generate a master key and first device")
   .option("--handle <handle>", "Handle to use (skips interactive prompt)")

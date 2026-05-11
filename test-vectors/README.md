@@ -2,14 +2,14 @@
 
 This directory contains the canonical conformance test vectors for Tessera v0.1. **A conformant verifier MUST treat every "valid" vector as VALID and every "invalid" vector with the documented failure mode.**
 
-These vectors are mirrored to the protocol repository at `github.com/gabdim1221/veritas-protocol/test-vectors`.
+These vectors are mirrored to the protocol repository at `github.com/gabdim1221/confirmata-protocol/test-vectors`.
 
 ## How to use
 
 Run the conformance suite against the reference verifier:
 
 ```bash
-cd veritas-verifier
+cd confirmata-verifier
 npm test                         # runs all unit tests + 10 conformance vectors
 ```
 
@@ -46,8 +46,8 @@ The `fixtures/` directory holds the original content bytes for any vector that r
 
 All vectors are signed under a single deterministic identity (`alice`):
 
-- master key derives from `sha256("veritas/v0.1/test-vectors/master")`
-- device key derives from `sha256("veritas/v0.1/test-vectors/device")`
+- master key derives from `sha256("confirmata/v0.1/test-vectors/master")`
+- device key derives from `sha256("confirmata/v0.1/test-vectors/device")`
 
 This is **for fixture reproducibility only** — never use a deterministic key derivation for real-world Tesserae.
 
@@ -57,4 +57,4 @@ This is **for fixture reproducibility only** — never use a deterministic key d
 2. Run `npx tsx scripts/generate-vectors.ts` from the verifier package.
 3. Add a corresponding test in `test/conformance.test.ts`.
 4. Update the matrix above.
-5. Commit; mirror the file to `veritas-protocol/test-vectors/` (`cp -r ./test-vectors/* ../veritas-protocol/test-vectors/`).
+5. Commit; mirror the file to `confirmata-protocol/test-vectors/` (`cp -r ./test-vectors/* ../confirmata-protocol/test-vectors/`).
