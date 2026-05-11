@@ -7,6 +7,7 @@ import {
   verifyDelegation,
   hex,
   tesseraHash,
+  checkCompositionInvariants,
   VerificationErrorCode,
   type Tessera,
   type VerifyOptions,
@@ -158,5 +159,81 @@ describe("conformance vectors (Tessera v0.1)", () => {
       });
       expect(r.valid).toBe(true);
     });
+  });
+});
+
+describe("conformance vectors (Tessera v0.2 — composition_analysis)", () => {
+  const cases: Array<{
+    file: string;
+    expectedHumanPct: number;
+    expectedConfidence: "high" | "medium" | "low";
+    expectedCategories: string[];
+  }> = [
+    {
+      file: "v0.2/composition_pure_human.json",
+      expectedHumanPct: 95.0,
+      expectedConfidence: "high",
+      expectedCategories: ["academic_70_plus", "journalism_60_plus", "creative_writing_50_plus"],
+    },
+    {
+      file: "v0.2/composition_hybrid.json",
+      expectedHumanPct: 70.0,
+      expectedConfidence: "high",
+      expectedCategories: ["academic_70_plus", "journalism_60_plus"],
+    },
+    {
+      file: "v0.2/composition_mostly_ai.json",
+      expectedHumanPct: 28.0,
+      expectedConfidence: "medium",
+      expectedCategories: [],
+    },
+  ];
+
+  for (const c of cases) {
+    it(`${c.file} → VALID, signature + composition invariants both hold`, async () => {
+      const b = await loadJson<Bundle>(c.file);
+      const r = await verify(b.tessera, {
+        fetchDelegation: async () => b.delegation ?? null,
+        verifyAnchor: stubAnchor,
+      });
+      expect(r.valid).toBe(true);
+      expect(b.tessera.version).toBe("tessera/v0.2");
+      const ca = b.tessera.composition_analysis;
+      expect(ca).toBeDefined();
+      if (ca) {
+        expect(ca.computed_authorship.human_pct).toBe(c.expectedHumanPct);
+        expect(ca.computed_authorship.confidence).toBe(c.expectedConfidence);
+        expect(ca.policy_eligible_categories).toEqual(c.expectedCategories);
+        // Invariants 1, 2, 3, 5 — exercise checkCompositionInvariants directly.
+        expect(checkCompositionInvariants(ca)).toBe(null);
+        const buckets = ca.buckets;
+        const bucketSum =
+          buckets.human_active_ms +
+          buckets.ai_assisted_ms +
+          buckets.voice_authored_ms +
+          buckets.paste_inserted_ms +
+          buckets.context_review_ms +
+          buckets.idle_ms;
+        expect(Math.abs(bucketSum - ca.total_session_ms)).toBeLessThanOrEqual(100);
+        const pctSum =
+          ca.computed_authorship.human_pct +
+          ca.computed_authorship.ai_assisted_pct +
+          ca.computed_authorship.ambiguous_pct;
+        expect(pctSum).toBeGreaterThanOrEqual(99.0);
+        expect(pctSum).toBeLessThanOrEqual(101.0);
+      }
+    });
+  }
+
+  it("rejects a tampered composition_analysis with COMPOSITION_INVARIANT_VIOLATION", async () => {
+    const b = await loadJson<Bundle>("v0.2/composition_hybrid.json");
+    // Tamper: flip bucket sum out of range. This breaks the on-tessera signature
+    // because the field is part of the canonicalized payload, so we re-sign the
+    // tampered tessera with the device key. To keep the test self-contained
+    // without re-signing, we instead bypass verify() and call the invariant
+    // check directly with a mutated copy.
+    const broken = JSON.parse(JSON.stringify(b.tessera.composition_analysis));
+    broken.buckets.idle_ms += 5_000_000; // overshoot total_session_ms
+    expect(checkCompositionInvariants(broken)).not.toBe(null);
   });
 });

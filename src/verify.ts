@@ -13,6 +13,7 @@ import type {
   VerificationFailure,
   AnchorStatus,
   AuthorshipPayload,
+  CompositionAnalysis,
 } from "./types.js";
 import { VerificationErrorCode } from "./errors.js";
 import { canonicalizeForSigning, tesseraHash, hex } from "./canonicalize.js";
@@ -55,6 +56,78 @@ function failure(
   return { valid: false, errorCode: code, errorMessage: message, details };
 }
 
+/**
+ * Validate composition_analysis invariants 1–6 from spec/v0.2/tessera.md §13.3.
+ * Returns null when all invariants hold, otherwise a human-readable error string.
+ *
+ * Invariants 1 and 2 use ±100ms and ±1.0pp rounding tolerances per the spec.
+ * Invariant 3 (non-negativity) and 6 (required sub-fields) are partially
+ * enforced by the type system but re-checked at runtime for untrusted input.
+ */
+export function checkCompositionInvariants(ca: CompositionAnalysis): string | null {
+  // Invariant 6: required sub-fields (re-check runtime shape)
+  if (
+    ca.version !== "1" ||
+    !Number.isFinite(ca.total_session_ms) ||
+    !ca.buckets ||
+    !ca.computed_authorship ||
+    typeof ca.classification_method !== "string"
+  ) {
+    return "composition_analysis: missing or malformed required sub-fields";
+  }
+  if (!/^[a-z_]+_classifier_v\d+\.\d+$/.test(ca.classification_method)) {
+    return `composition_analysis.classification_method has invalid format: ${ca.classification_method}`;
+  }
+  const b = ca.buckets;
+  const bucketKeys: (keyof typeof b)[] = [
+    "human_active_ms",
+    "ai_assisted_ms",
+    "voice_authored_ms",
+    "paste_inserted_ms",
+    "context_review_ms",
+    "idle_ms",
+  ];
+  // Invariant 3: non-negativity of _ms
+  for (const k of bucketKeys) {
+    if (!Number.isFinite(b[k]) || b[k] < 0) {
+      return `composition_analysis.buckets.${k}: must be >= 0`;
+    }
+  }
+  // Invariant 1: bucket sum == total_session_ms ±100ms
+  const bucketSum = bucketKeys.reduce((s, k) => s + b[k], 0);
+  if (Math.abs(bucketSum - ca.total_session_ms) > 100) {
+    return `composition_analysis: bucket sum ${bucketSum} != total_session_ms ${ca.total_session_ms} (±100ms tolerance)`;
+  }
+  // Invariant 4: authorship_time minimum
+  const authorshipTime = ca.total_session_ms - b.context_review_ms - b.idle_ms;
+  if (authorshipTime < 1000) {
+    return `composition_analysis: authorship_time ${authorshipTime}ms < 1000ms; field must be omitted for sub-second sessions`;
+  }
+  const ca2 = ca.computed_authorship;
+  // Invariant 3: percentage range
+  for (const k of ["human_pct", "ai_assisted_pct", "ambiguous_pct"] as const) {
+    if (!Number.isFinite(ca2[k]) || ca2[k] < 0 || ca2[k] > 100) {
+      return `composition_analysis.computed_authorship.${k}: must be in [0, 100]`;
+    }
+  }
+  // Invariant 2: percentage sum in [99.0, 101.0]
+  const pctSum = ca2.human_pct + ca2.ai_assisted_pct + ca2.ambiguous_pct;
+  if (pctSum < 99.0 || pctSum > 101.0) {
+    return `composition_analysis: percentage sum ${pctSum.toFixed(2)} not in [99.0, 101.0]`;
+  }
+  // Invariant 5 (voice → human) is a classifier-side rule; the verifier
+  // cannot independently confirm voice classification, but enforces the
+  // human_pct formula against the buckets the issuer reported.
+  const expectedHumanPct = (b.human_active_ms + b.voice_authored_ms) / authorshipTime * 100;
+  if (Math.abs(expectedHumanPct - ca2.human_pct) > 1.0) {
+    return `composition_analysis: computed human_pct ${ca2.human_pct.toFixed(2)} disagrees with (human_active+voice)/authorship_time = ${expectedHumanPct.toFixed(2)} (±1pp)`;
+  }
+  if (!["high", "medium", "low"].includes(ca2.confidence)) {
+    return `composition_analysis.computed_authorship.confidence: invalid value ${String(ca2.confidence)}`;
+  }
+  return null;
+}
+
 const KNOWN_TYPES = new Set([
   "authorship",
   "witness",
@@ -70,7 +143,7 @@ function validateSchema(t: unknown): VerificationFailure | null {
     return failure(VerificationErrorCode.INVALID_SCHEMA, "tessera is not an object");
   }
   const o = t as Record<string, unknown>;
-  if (o.version !== "tessera/v0.1") {
+  if (o.version !== "tessera/v0.1" && o.version !== "tessera/v0.2") {
     return failure(VerificationErrorCode.INVALID_SCHEMA, `unknown version: ${String(o.version)}`);
   }
   if (typeof o.type !== "string" || !KNOWN_TYPES.has(o.type)) {
@@ -258,6 +331,14 @@ export async function verify(
       VerificationErrorCode.LOA_INSUFFICIENT,
       `LOA ${tessera.claim.loa} < required ${requiredLoa}`,
     );
+  }
+
+  // 8. Composition analysis invariants (v0.2 §13.3, when present)
+  if (tessera.composition_analysis !== undefined) {
+    const violation = checkCompositionInvariants(tessera.composition_analysis);
+    if (violation !== null) {
+      return failure(VerificationErrorCode.COMPOSITION_INVARIANT_VIOLATION, violation);
+    }
   }
 
   return {

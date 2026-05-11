@@ -1,6 +1,6 @@
 export * from "./types.js";
 export * from "./errors.js";
-export { verify } from "./verify.js";
+export { verify, checkCompositionInvariants } from "./verify.js";
 export type { VerifyOptions } from "./verify.js";
 export {
   canonicalizeForSigning,

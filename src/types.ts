@@ -1,13 +1,13 @@
 /**
- * TypeScript types for Tessera v0.1.
+ * TypeScript types for Tessera v0.1 and v0.2.
  *
- * Source of truth: github.com/gabdim1221/confirmata-protocol/blob/main/spec/v0.1/tessera.md
+ * Source of truth: github.com/gabdim1221/confirmata-protocol/blob/main/spec/v0.2/tessera.md
  * If a field appears here that is not in the spec, that is a bug in this file.
  */
 
 import type { VerificationErrorCode } from "./errors.js";
 
-export type TesseraVersion = "tessera/v0.1";
+export type TesseraVersion = "tessera/v0.1" | "tessera/v0.2";
 
 export type TesseraType =
   | "authorship"
@@ -160,6 +160,40 @@ export interface LodestonePayload {
   supersedes?: string;              // sha256 of prior lodestone on same topic
 }
 
+// ---- composition analysis (spec v0.2 §13) ----
+
+export type CompositionConfidence = "high" | "medium" | "low";
+
+export interface CompositionBuckets {
+  human_active_ms: number;
+  ai_assisted_ms: number;
+  voice_authored_ms: number;
+  paste_inserted_ms: number;
+  context_review_ms: number;
+  idle_ms: number;
+}
+
+export interface ComputedAuthorship {
+  human_pct: number;
+  ai_assisted_pct: number;
+  ambiguous_pct: number;
+  confidence: CompositionConfidence;
+}
+
+/**
+ * §13 v0.2 composition_analysis sub-schema. OPTIONAL top-level field on
+ * authorship Tesserae. Verifiers MUST validate invariants 1–6 when present
+ * (§13.3) and reject with COMPOSITION_INVARIANT_VIOLATION on failure.
+ */
+export interface CompositionAnalysis {
+  version: "1";
+  total_session_ms: number;
+  buckets: CompositionBuckets;
+  computed_authorship: ComputedAuthorship;
+  classification_method: string;        // /^[a-z_]+_classifier_v\d+\.\d+$/
+  policy_eligible_categories?: string[];
+}
+
 // ---- envelope (spec §2) ----
 
 interface BaseEnvelope {
@@ -170,6 +204,8 @@ interface BaseEnvelope {
   biometric_attestation: BiometricAttestation;
   anchor: Anchor;
   signature: Signature;
+  /** v0.2 only: present on authorship Tesserae issued by capture-enabled clients. */
+  composition_analysis?: CompositionAnalysis;
 }
 
 /**

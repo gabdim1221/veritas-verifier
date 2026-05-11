@@ -21,8 +21,9 @@ describe("types", () => {
     expect(all).toHaveLength(7);
   });
 
-  it("VerificationErrorCode covers all 13 spec failure modes", () => {
-    expect(Object.keys(VerificationErrorCode)).toHaveLength(13);
+  it("VerificationErrorCode covers all 14 spec failure modes (13 v0.1 + 1 v0.2)", () => {
+    expect(Object.keys(VerificationErrorCode)).toHaveLength(14);
+    expect(VerificationErrorCode.COMPOSITION_INVARIANT_VIOLATION).toBe("COMPOSITION_INVARIANT_VIOLATION");
   });
 
   it("Tessera envelope discriminates type_payload by `type`", () => {

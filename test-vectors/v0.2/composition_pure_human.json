@@ -1,0 +1,111 @@
+{
+  "description": "v0.2 composition_analysis: 30-min session, ~95% human, 0% AI-assisted, 5% ambiguous, confidence high. Tests the high-human edge of the model.",
+  "tessera": {
+    "version": "tessera/v0.2",
+    "type": "authorship",
+    "tessera_id": "cccc1111-1111-4111-8111-cccccccccccc",
+    "issuer": {
+      "user_handle": "alice",
+      "user_master_pubkey": "T81Auc_g57iYuiYP8O6osEVPhTfsX9RB7TTAN6t5R8A",
+      "device_pubkey": "L52q0DKmR1ePGGoH8nzDX-TjIHAIRMJ8WDYLpyjd-jw",
+      "device_delegation_hash": "a46fdd274445e62bad2538cd0c39bbedf770213f36947c5fe87db1c5cb6c8ebc"
+    },
+    "claim": {
+      "loa": 3,
+      "issued_at": "2026-05-08T19:00:00.000Z"
+    },
+    "type_payload": {
+      "subject": {
+        "content_hash": "3259f6860c4830d74e16c05500c6049f14fd40827768dbb009a4e31d40d4b0dd",
+        "content_size_bytes": 61,
+        "content_mime": "text/plain",
+        "content_filename": "conformance.txt"
+      },
+      "session": {
+        "started_at": "2026-05-08T19:00:00.000Z",
+        "ended_at": "2026-05-08T19:30:00.000Z",
+        "duration_ms": 1800000,
+        "tools_used": [
+          "confirmata-conformance@v0.2",
+          "composition_pure_human"
+        ]
+      },
+      "behavioral_fingerprint": "Mln2hgxIMNdOFsBVAMYEnxT9QIJ3aNuwCaTjHUDUsN0",
+      "ai_assistance_disclosure": "none"
+    },
+    "biometric_attestation": {
+      "method": "webauthn_liveness",
+      "authenticator_data": "zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMw",
+      "client_data_json": "3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3Q"
+    },
+    "anchor": {
+      "service": "opentimestamps",
+      "ots_proof": "q6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urqw"
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "value": "4t2fX-16GSQhUZh18quXZMucJ3WREJqupiX_Qt8zsSBGAiD5a8Q2D6GjHxsH5-wHNhAAQqEpuSHIzGbLOkjfBA"
+    },
+    "composition_analysis": {
+      "version": "1",
+      "total_session_ms": 1800000,
+      "buckets": {
+        "human_active_ms": 1500000,
+        "ai_assisted_ms": 0,
+        "voice_authored_ms": 96000,
+        "paste_inserted_ms": 84000,
+        "context_review_ms": 60000,
+        "idle_ms": 60000
+      },
+      "computed_authorship": {
+        "human_pct": 95,
+        "ai_assisted_pct": 0,
+        "ambiguous_pct": 5,
+        "confidence": "high"
+      },
+      "classification_method": "confirmata_classifier_v1.0",
+      "policy_eligible_categories": [
+        "academic_70_plus",
+        "journalism_60_plus",
+        "creative_writing_50_plus"
+      ]
+    }
+  },
+  "delegation": {
+    "version": "tessera/v0.1",
+    "type": "delegation",
+    "tessera_id": "11111111-1111-4111-8111-111111111111",
+    "issuer": {
+      "user_handle": "alice",
+      "user_master_pubkey": "T81Auc_g57iYuiYP8O6osEVPhTfsX9RB7TTAN6t5R8A",
+      "device_pubkey": "T81Auc_g57iYuiYP8O6osEVPhTfsX9RB7TTAN6t5R8A",
+      "device_delegation_hash": ""
+    },
+    "claim": {
+      "loa": 0,
+      "issued_at": "2026-05-08T17:00:00.000Z"
+    },
+    "type_payload": {
+      "delegated_pubkey": "L52q0DKmR1ePGGoH8nzDX-TjIHAIRMJ8WDYLpyjd-jw",
+      "device_name": "alice-test-device",
+      "device_platform": "test",
+      "scope": [
+        "sign:authorship",
+        "sign:revocation"
+      ],
+      "valid_from": "2026-05-08T17:00:00.000Z",
+      "valid_until": "2099-01-01T00:00:00.000Z"
+    },
+    "biometric_attestation": {
+      "method": "none"
+    },
+    "anchor": {
+      "service": "opentimestamps",
+      "ots_proof": "q6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urqw"
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "value": "poqI-FV5_dZxf-x_h7erk7N3298tuSxdUjCFpx6tdX3I1tUdGznzxyU8mOiItyaOCAknZnv3pNJTSh6ZwFP5Dw"
+    }
+  }
+}
